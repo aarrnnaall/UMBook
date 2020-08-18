@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "umbook.com.ar"
+    },
+    "jhipsterVersion": "6.9.0",
+    "applicationType": "monolith",
+    "baseName": "UMBook",
+    "packageName": "umbook.com.ar",
+    "packageFolder": "umbook/com/ar",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ODU3ODk3Y2RhMjg3OTlmNzJjMmQ4ODNlMzhkZWFlYjM5NWQ1NTI2MzlkOWMyNDI0MmI1NDE0ODFlMTliZjNkOGE0MTkwNDExNzVjZTRhMmZlMDdlYjU2Y2FmNjU3YTAzNjdlOWRjYjI3MzMwNGVhYThkNDA5YWYxM2FkYTM0NTk=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "darkly",
+    "clientThemeVariant": "dark",
+    "creationTimestamp": 1597787005878,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": []
+  }
+}
