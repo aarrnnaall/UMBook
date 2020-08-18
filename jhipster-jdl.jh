@@ -1,0 +1,14 @@
+entity User {
+}
+entity Friends {
+
+} 
+relationship OneToOne {
+	Friends{user} to User
+}
+
+relationship ManyToMany {
+	Friends{friends} to User
+}
+
+
