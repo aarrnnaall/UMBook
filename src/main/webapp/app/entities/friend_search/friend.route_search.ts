@@ -7,10 +7,10 @@ import { flatMap } from 'rxjs/operators';
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IFriend, Friend } from 'app/shared/model/friend.model';
-import { FriendService } from './friend.service';
-import { FriendComponent } from './friend.component';
-import { FriendDetailComponent } from './friend-detail.component';
-import { FriendUpdateComponent } from './friend-update.component';
+import { FriendService } from './friend.service_search';
+import { FriendComponent } from './friend.component_search';
+import { FriendDetailComponent } from './friend-detail.component_search';
+import { FriendUpdateComponent } from './friend-update.component_search';
 
 @Injectable({ providedIn: 'root' })
 export class FriendResolve implements Resolve<IFriend> {
@@ -39,7 +39,7 @@ export const friendRoute: Routes = [
     path: '',
     component: FriendComponent,
     data: {
-      authorities: [Authority.ADMIN],
+      authorities: [Authority.USER],
       pageTitle: 'Friends',
     },
     canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const friendRoute: Routes = [
       friend: FriendResolve,
     },
     data: {
-      authorities: [Authority.ADMIN],
+      authorities: [Authority.USER],
       pageTitle: 'Friends',
     },
     canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const friendRoute: Routes = [
       friend: FriendResolve,
     },
     data: {
-      authorities: [Authority.ADMIN],
+      authorities: [Authority.USER],
       pageTitle: 'Friends',
     },
     canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const friendRoute: Routes = [
       friend: FriendResolve,
     },
     data: {
-      authorities: [Authority.ADMIN],
+      authorities: [Authority.USER],
       pageTitle: 'Friends',
     },
     canActivate: [UserRouteAccessService],
