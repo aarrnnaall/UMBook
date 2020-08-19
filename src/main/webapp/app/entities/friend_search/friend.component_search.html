@@ -30,7 +30,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let friend of friends ;trackBy: trackId">
-                    <td><a [routerLink]="['/friend', friend.id, 'view']">{{ friend.id }}</a></td>
+                    <td><a [routerLink]="['/friend_search', friend.id, 'view']">{{ friend.id }}</a></td>
                     <td>
                         {{ friend.user?.id }}
                     </td>
