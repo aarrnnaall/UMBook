@@ -61,7 +61,16 @@ export const friendRoute: Routes = [
     component: FriendDetailComponent,
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'mod',
+      pageTitle: 'Search',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'mod',
+    component: FriendDetailComponent,
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'User',
     },
     canActivate: [UserRouteAccessService],
   },

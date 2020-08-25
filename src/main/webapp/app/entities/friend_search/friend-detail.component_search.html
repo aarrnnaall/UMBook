@@ -1,16 +1,40 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="value">
-            <h1>{{value}}</h1>  
-            <button type="submit"
-            (click)="previousState()"
-            class="btn btn-info">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Volver</span>
+            <p>Buscando: "{{value}}"</p>
+            
+            <div class="table-responsive" *ngIf="users">
+                <table class="table table-striped" aria-describedby="user-management-page-heading">
+                    <thead>
+                        <tr>
+                            <th scope="col"><span>Usuario</span> <fa-icon icon="sort"></fa-icon></th>
+                            <th scope="col"><span>Correo</span> <fa-icon icon="sort"></fa-icon></th>
+                            <th scope="col"><span>Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+                            <th scope="col"><span>Apellido</span> <fa-icon icon="sort"></fa-icon></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="users">
+                        <tr *ngFor="let user of users; trackBy: trackIdentity">
+                            <td *ngIf="search(user.firstName,value) || search(user.lastName,value) || search(user.login,value) || search(user.email,value)" >{{ user.login }}</td>
+                            <td *ngIf="search(user.firstName,value) || search(user.lastName,value) || search(user.login,value) || search(user.email,value)" >{{ user.email }}</td>
+                            <td *ngIf="search(user.firstName,value) || search(user.lastName,value) || search(user.login,value) || search(user.email,value)">{{ user.firstName}}</td>
+                            <td *ngIf="search(user.firstName,value) || search(user.lastName,value) || search(user.login,value) || search(user.email,value)">{{ user.lastName }}</td>
+                            
+                            <td class="text-right" *ngIf="search(user.firstName,value) || search(user.lastName,value) || search(user.login,value) || search(user.email,value)">
+                                    <button class="btn btn-danger btn-sm" (click)="setnotActive(true,user)" *ngIf="filterfriendaccountuser(user)[0]">Eliminar</button>
+                                    <button class="btn btn-success btn-sm" (click)="setActive(false,user)" *ngIf="!filterfriendaccountuser(user)[0]">Agregar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        
+    <button type="submit"
+    (click)="previousState()"
+    class="btn btn-info">
+    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Volver</span>
     </button>  
-    <div *ngFor="let elem of users">
-        <h1>{{elem.firstName }}</h1>
-        <h1>{{elem.lastName}}</h1> 
-    </div>
     </div>
         <div *ngIf="friend">
             <h2><span>Friend</span> {{ friend.id }}</h2>
