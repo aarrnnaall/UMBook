@@ -14,6 +14,7 @@ import umbook.com.ar.web.rest.errors.LoginAlreadyUsedException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import liquibase.pro.packaged.u;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,6 +150,11 @@ public class UserResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @GetMapping("/users/all")
+    public List<User> AllUsers() {
+        List<User> user = userService.AllManagedUsers();
+        return user;
+    }
     /**
      * Gets a list of all roles.
      * @return a string list of all roles.

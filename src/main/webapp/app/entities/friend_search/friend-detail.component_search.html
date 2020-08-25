@@ -1,5 +1,17 @@
 <div class="row justify-content-center">
     <div class="col-8">
+        <div *ngIf="value">
+            <h1>{{value}}</h1>  
+            <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Volver</span>
+    </button>  
+    <div *ngFor="let elem of users">
+        <h1>{{elem.firstName }}</h1>
+        <h1>{{elem.lastName}}</h1> 
+    </div>
+    </div>
         <div *ngIf="friend">
             <h2><span>Friend</span> {{ friend.id }}</h2>
 

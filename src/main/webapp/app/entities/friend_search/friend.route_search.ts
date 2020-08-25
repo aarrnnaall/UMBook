@@ -57,6 +57,16 @@ export const friendRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
+    path: ':value/mod',
+    component: FriendDetailComponent,
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'mod',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+
+  {
     path: 'new',
     component: FriendUpdateComponent,
     resolve: {
