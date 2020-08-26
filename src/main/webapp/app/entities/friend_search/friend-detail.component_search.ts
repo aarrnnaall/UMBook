@@ -16,6 +16,7 @@ export class FriendDetailComponent implements OnInit {
   friend: IFriend | null = null;
   friends?: IFriend[];
   userfilter?: IUser[];
+  friendsuser?: IFriend[];
 
   value: any;
   users: IUser[] | null = null;
@@ -42,7 +43,32 @@ export class FriendDetailComponent implements OnInit {
   filterfriendaccount(): any {
     return this.friends?.filter(x => x.user?.login === this.account.login);
   }
-  filterfriendaccountuser(user: IUser): any {
+  filterfriendanull(): any {
+    if (this.friends?.filter(x => x.user?.login === this.account.login).length === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  filterfriendaccountrec(user: any): any {
+    return this.friends?.filter(x => x.user?.login === user.login);
+  }
+
+  filterfriendaccountalfter(): any {
+    return this.friends?.filter(x => x.friends?.filter(p => p.login === this.account.login));
+  }
+  filterrep(user: any): any {
+    if (this.friends?.filter(x => x.user?.login === this.account.login)[0].friends?.filter(p => p.login === user.login).length === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  filterrepval(user: any): any {
+    return this.friends?.filter(x => x.user?.login === this.account.login)[0].friends?.filter(p => p.login === user.login);
+  }
+
+  filterfriendaccountuser(user: any): any {
     this.userfilter = this.filterfriendaccount()[0].friends;
     return this.userfilter?.filter(x => x.login === user.login);
   }
@@ -56,10 +82,17 @@ export class FriendDetailComponent implements OnInit {
     this.actived = isActivated;
     this.save(user);
   }
+
   setnotActive(isActivated: boolean, user: IUser): void {
     this.actived = isActivated;
     this.delete(user);
   }
+
+  setActiverec(isActivated: boolean, user: IUser): void {
+    this.actived = isActivated;
+    this.deleterec(user);
+  }
+
   private createFromForm(user: IUser): IFriend {
     if (this.filterfriendaccount()[0]) {
       const olduser = this.filterfriendaccount()[0].friends;
@@ -109,6 +142,23 @@ export class FriendDetailComponent implements OnInit {
       };
     }
   }
+  private deleteFromFormrec(user: IUser): IFriend {
+    const olduser = this.filterfriendaccountrec(user)[0].friends;
+    const addnew = [];
+    let i;
+    for (i = 0; i < olduser.length; i++) {
+      if (olduser[i].login !== this.account.login) {
+        addnew.push(olduser[i]);
+      }
+    }
+    return {
+      ...new Friend(),
+      id: this.filterfriendaccountrec(user)[0].id,
+      user: this.account,
+      friends: addnew,
+    };
+  }
+
   save(user: IUser): void {
     this.isSaving = true;
     const friend = this.createFromForm(user);
@@ -121,6 +171,13 @@ export class FriendDetailComponent implements OnInit {
   delete(user: IUser): void {
     this.isSaving = true;
     const friend = this.deleteFromForm(user);
+    if (friend.id !== undefined) {
+      this.subscribeToSaveResponse(this.friendService.update(friend));
+    }
+  }
+  deleterec(user: IUser): void {
+    this.isSaving = true;
+    const friend = this.deleteFromFormrec(user);
     if (friend.id !== undefined) {
       this.subscribeToSaveResponse(this.friendService.update(friend));
     }

@@ -1,5 +1,72 @@
 <div class="row justify-content-center">
     <div class="col-8">
+<div *ngIf="!friend">
+<div *ngIf="!value">
+    <h2 id="page-heading">
+        <span>Solicitudes</span>
+    <br>
+    </h2>
+    <div class="table-responsive" *ngIf="filterfriendaccountalfter()">
+        <table class="table table-striped" aria-describedby="user-management-page-heading">
+            <thead>
+                <tr>
+                    <th scope="col"><span>Usuario</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"><span>Correo</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"><span>Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"><span>Apellido</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            
+            <tbody *ngIf="filterfriendaccountalfter()">
+                <tr *ngFor="let friend of filterfriendaccountalfter();">
+                   
+                    <td *ngIf="(!search(friend.user.login,account.login) &&  filterrep(friend.user)) ">{{ friend.user.login }}</td>
+                    <td *ngIf="(!search(friend.user.login,account.login) &&  filterrep(friend.user))">{{ friend.user.email }}</td>
+                    <td *ngIf="(!search(friend.user.login,account.login) &&  filterrep(friend.user))">{{ friend.user.firstName}}</td>
+                    <td *ngIf="(!search(friend.user.login,account.login) &&  filterrep(friend.user))">{{ friend.user.lastName }}</td>
+                    
+                    <td *ngIf="(!search(friend.user.login,account.login)&&  filterrep(friend.user)) " class="text-right" >
+                        <button class="btn btn-success btn-sm" (click)="setActive(false,friend.user)" >Aceptar</button>
+                        <button class="btn btn-danger btn-sm" (click)="setActiverec(true,friend.user)">Rechazar</button>
+                    </td>
+                 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h2 id="page-heading">
+        <span>Amigos</span>
+ <br>
+    </h2>
+
+        <div class="table-responsive" *ngIf="users">
+            <table class="table table-striped" aria-describedby="user-management-page-heading">
+                <thead>
+                    <tr>
+                        <th scope="col"><span>Usuario</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"><span>Correo</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"><span>Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"><span>Apellido</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="users">
+                    <tr *ngFor="let user of this.filterfriendaccount()[0].friends; trackBy: trackIdentity">
+                        <td >{{ user.login }}</td>
+                        <td >{{ user.email }}</td>
+                        <td >{{ user.firstName}}</td>
+                        <td >{{ user.lastName }}</td>
+                        
+                        <td class="text-right" >
+                                <button class="btn btn-danger btn-sm" (click)="setnotActive(true,user)" *ngIf="filterfriendaccountuser(user)[0]">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+</div>
         <div *ngIf="value">
             <p>Buscando: "{{value}}"</p>
             
@@ -21,9 +88,9 @@
                             <td *ngIf="search(user.firstName,value) || search(user.lastName,value) || search(user.login,value) || search(user.email,value)">{{ user.firstName}}</td>
                             <td *ngIf="search(user.firstName,value) || search(user.lastName,value) || search(user.login,value) || search(user.email,value)">{{ user.lastName }}</td>
                             
-                            <td class="text-right" *ngIf="search(user.firstName,value) || search(user.lastName,value) || search(user.login,value) || search(user.email,value)">
+                            <td class="text-right" *ngIf="(search(user.firstName,value) || search(user.lastName,value) || search(user.login,value) || search(user.email,value))">
                                     <button class="btn btn-danger btn-sm" (click)="setnotActive(true,user)" *ngIf="filterfriendaccountuser(user)[0]">Eliminar</button>
-                                    <button class="btn btn-success btn-sm" (click)="setActive(false,user)" *ngIf="!filterfriendaccountuser(user)[0]">Agregar</button>
+                                    <button class="btn btn-success btn-sm" (click)="setActive(false,user)" *ngIf="(!filterfriendaccountuser(user)[0] || filterfriendanull())">Agregar</button>
                             </td>
                         </tr>
                     </tbody>
