@@ -17,15 +17,16 @@ export class FriendDetailComponent implements OnInit {
   friends?: IFriend[];
   userfilter?: IUser[];
   friendsuser?: IFriend[];
-
+  somethingfriend?: IFriend;
   value: any;
+  valuerep: any;
   users: IUser[] | null = null;
   actived: boolean | null = null;
   add: IUser[] | undefined;
   authSubscription?: Subscription;
   account: any;
   isSaving = false;
-
+  nullfriend: boolean | null = null;
   constructor(private accountService: AccountService, protected friendService: FriendService, protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -43,17 +44,27 @@ export class FriendDetailComponent implements OnInit {
   filterfriendaccount(): any {
     return this.friends?.filter(x => x.user?.login === this.account.login);
   }
-  filterfriendanull(): any {
-    if (this.friends?.filter(x => x.user?.login === this.account.login).length === 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
   filterfriendaccountrec(user: any): any {
     return this.friends?.filter(x => x.user?.login === user.login);
   }
-
+  filterfriendanull(): any {
+    if (this.friends?.filter(x => x.user?.login === this.account.login).length === 0) {
+      this.nullfriend = true;
+      return true;
+    } else {
+      this.nullfriend = false;
+      return false;
+    }
+  }
+  filterfriendanulluser(user: IUser): any {
+    if (this.friends?.filter(x => x.user?.login === user.login).length === 0) {
+      this.nullfriend = true;
+      return true;
+    } else {
+      this.nullfriend = false;
+      return false;
+    }
+  }
   filterfriendaccountalfter(): any {
     return this.friends?.filter(x => x.friends?.filter(p => p.login === this.account.login));
   }
@@ -67,10 +78,16 @@ export class FriendDetailComponent implements OnInit {
   filterrepval(user: any): any {
     return this.friends?.filter(x => x.user?.login === this.account.login)[0].friends?.filter(p => p.login === user.login);
   }
-
+  filternotrec(user: IUser): any {
+    this.somethingfriend = this.friends?.filter(x => x.user?.login === user.login)[0];
+    return this.somethingfriend?.friends?.filter(p => p.login === this.account.login);
+  }
   filterfriendaccountuser(user: any): any {
     this.userfilter = this.filterfriendaccount()[0].friends;
     return this.userfilter?.filter(x => x.login === user.login);
+  }
+  filterrec(user: any): any {
+    return this.friends?.filter(x => x.user?.login === user.login);
   }
   loadAll(): void {
     this.friendService.users().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
@@ -117,6 +134,22 @@ export class FriendDetailComponent implements OnInit {
       };
     }
   }
+  private deleteFromFormrec(user: IUser): IFriend {
+    const olduser = this.filterrec(user)[0].friends;
+    const addnew = [];
+    let i;
+    for (i = 0; i < olduser.length; i++) {
+      if (olduser[i].login !== this.account.login) {
+        addnew.push(olduser[i]);
+      }
+    }
+    return {
+      ...new Friend(),
+      id: this.filterrec(user)[0].id,
+      user,
+      friends: addnew,
+    };
+  }
   private deleteFromForm(user: IUser): IFriend {
     if (this.filterfriendaccount()[0]) {
       const olduser = this.filterfriendaccount()[0].friends;
@@ -142,23 +175,6 @@ export class FriendDetailComponent implements OnInit {
       };
     }
   }
-  private deleteFromFormrec(user: IUser): IFriend {
-    const olduser = this.filterfriendaccountrec(user)[0].friends;
-    const addnew = [];
-    let i;
-    for (i = 0; i < olduser.length; i++) {
-      if (olduser[i].login !== this.account.login) {
-        addnew.push(olduser[i]);
-      }
-    }
-    return {
-      ...new Friend(),
-      id: this.filterfriendaccountrec(user)[0].id,
-      user: this.account,
-      friends: addnew,
-    };
-  }
-
   save(user: IUser): void {
     this.isSaving = true;
     const friend = this.createFromForm(user);
