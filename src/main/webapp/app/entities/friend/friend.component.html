@@ -32,11 +32,11 @@
                 <tr *ngFor="let friend of friends ;trackBy: trackId">
                     <td><a [routerLink]="['/friend', friend.id, 'view']">{{ friend.id }}</a></td>
                     <td>
-                        {{ friend.user?.id }}
+                        {{ friend.user?.login }}
                     </td>
                     <td>
                         <span *ngFor="let friends of friend.friends; let last = last">
-                            {{ friends.id }}{{ last ? '' : ', ' }}
+                            {{ friends.login }}{{ last ? '' : ', ' }}
                         </span>
                     </td>
                     <td class="text-right">

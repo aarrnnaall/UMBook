@@ -10,12 +10,12 @@
             <dl class="row-md jh-entity-details">
                 <dt><span>User</span></dt>
                 <dd>
-                    {{ friend.user?.id }}
+                    {{ friend.user?.login }}
                 </dd>
                 <dt><span>Friends</span></dt>
                 <dd>
                     <span *ngFor="let friends of friend.friends; let last = last">
-                        {{ friends.id }}{{ last ? '' : ', ' }}
+                        {{ friends.login }}{{ last ? '' : ', ' }}
                     </span>
                 </dd>
             </dl>

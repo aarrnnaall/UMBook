@@ -215,20 +215,24 @@ export class FriendDetailComponent implements OnInit {
   }
 
   search(texto: any, buscar: String): boolean {
-    const posM = texto.indexOf(buscar[0].toUpperCase() + buscar.slice(1, 10));
-    const posMm = texto.indexOf(buscar[0].toUpperCase() + buscar.slice(1, 10).toLowerCase());
-
-    const posm = texto.indexOf(buscar[0].toLowerCase() + buscar.slice(1, 10));
-    const posmM = texto.indexOf(buscar[0].toLowerCase() + buscar.slice(1, 10).toUpperCase());
-
-    const pos = texto.indexOf(buscar);
-    const pos2 = texto.indexOf(buscar.toUpperCase());
-    const pos3 = texto.indexOf(buscar.toLowerCase());
-
-    if (pos !== -1 || pos2 !== -1 || pos3 !== -1 || posM !== -1 || posm !== -1 || posMm !== -1 || posmM !== -1) {
-      return true;
-    } else {
+    if (texto === null) {
       return false;
+    } else {
+      const posM = texto.indexOf(buscar[0].toUpperCase() + buscar.slice(1, 10));
+      const posMm = texto.indexOf(buscar[0].toUpperCase() + buscar.slice(1, 10).toLowerCase());
+
+      const posm = texto.indexOf(buscar[0].toLowerCase() + buscar.slice(1, 10));
+      const posmM = texto.indexOf(buscar[0].toLowerCase() + buscar.slice(1, 10).toUpperCase());
+
+      const pos = texto.indexOf(buscar);
+      const pos2 = texto.indexOf(buscar.toUpperCase());
+      const pos3 = texto.indexOf(buscar.toLowerCase());
+
+      if (pos !== -1 || pos2 !== -1 || pos3 !== -1 || posM !== -1 || posm !== -1 || posMm !== -1 || posmM !== -1) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
   previousState(): void {
